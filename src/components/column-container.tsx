@@ -69,10 +69,10 @@ export default function ColumnContainer({
         className={styles.header}
         onClick={() => setEditMode(true)}
       >
-        <div className="flex items-center gap-2">
-          <div className={styles.index}>
+        <div className={styles.headerContent}>
+          <span className={styles.index}>
             {index + 1}
-          </div>
+          </span>
           {!editMode && (
             <h2 className={styles.title}>{column.title}</h2>
           )}
@@ -95,7 +95,7 @@ export default function ColumnContainer({
           onClick={() => deleteColumn(column.id)}
           className={styles.deleteButton}
         >
-          <Trash2Icon className="size-4" />
+          <Trash2Icon size={16} />
         </button>
       </div>
       <div className={styles.tasksContainer}>
