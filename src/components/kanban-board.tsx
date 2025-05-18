@@ -2,7 +2,6 @@
 
 import ColumnContainer from "@/components/column-container";
 import TaskCard from "@/components/task-card";
-import { Button } from "@/components/ui/button";
 import { Column, Task } from "@/types";
 import {
   DndContext,
@@ -23,6 +22,7 @@ import { PlusCircleIcon } from "lucide-react";
 import * as React from "react";
 import { createPortal } from "react-dom";
 import useLocalStorageState from "use-local-storage-state";
+import styles from './kanban-board.module.css';
 
 export default function KanbanBoard() {
   const [mounted, setMounted] = React.useState(false);
@@ -178,24 +178,24 @@ export default function KanbanBoard() {
   };
 
   return (
-    <div className="w-full py-10 flex flex-col min-h-screen">
-      <div className="px-6 flex items-center justify-center">
-        <Button onClick={createColumn} className="w-56 py-5">
+    <div className={styles.container}>
+      <div className={styles.buttonContainer}>
+        <button onClick={createColumn} className={styles.addButton}>
           <PlusCircleIcon />
           Add Column
-        </Button>
+        </button>
       </div>
 
-      <div className="mt-10 p-6 flex flex-grow overflow-x-auto w-full">
+      <div className={styles.boardContainer}>
         <DndContext
           sensors={sensors}
           onDragStart={onDragStart}
           onDragEnd={onDragEnd}
           onDragOver={onDragOver}
         >
-          <div className="flex gap-6 items-center mx-auto justify-center">
+          <div className={styles.columnsWrapper}>
             {columns.length === 0 && (
-              <p className="text-base text-gray-400">No columns added yet.</p>
+              <p className={styles.emptyMessage}>No columns added yet.</p>
             )}
             <SortableContext
               items={columnsId}

@@ -6,6 +6,7 @@ import { SortableContext, useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { PlusIcon, Trash2Icon } from "lucide-react";
 import * as React from "react";
+import styles from "./column-container.module.css";
 
 export default function ColumnContainer({
   index,
@@ -51,7 +52,7 @@ export default function ColumnContainer({
       <div
         ref={setNodeRef}
         style={style}
-        className="flex w-[300px] border-2 opacity-40 border-rose-400 overflow-hidden h-[400px] flex-col rounded-md bg-primary shadow flex-shrink-0"
+        className={`${styles.container} ${styles.draggingContainer}`}
       ></div>
     );
   }
@@ -60,20 +61,20 @@ export default function ColumnContainer({
     <div
       ref={setNodeRef}
       style={style}
-      className="flex w-[300px] overflow-hidden h-[400px] flex-col rounded-md bg-primary shadow flex-shrink-0"
+      className={styles.container}
     >
       <div
         {...attributes}
         {...listeners}
-        className="text-base p-3 border-4 border-columnBackground cursor-grab bg-mainBackground justify-between flex items-center gap-2 font-semibold"
+        className={styles.header}
         onClick={() => setEditMode(true)}
       >
         <div className="flex items-center gap-2">
-          <div className="rounded-full px-2 py-1  text-sm bg-columnBackground">
+          <div className={styles.index}>
             {index + 1}
           </div>
           {!editMode && (
-            <h2 className="text-sm font-semibold">{column.title}</h2>
+            <h2 className={styles.title}>{column.title}</h2>
           )}
           {editMode && (
             <input
@@ -84,7 +85,7 @@ export default function ColumnContainer({
                 setEditMode(false);
               }}
               type="text"
-              className="text-sm font-semibold bg-black border rounded outline-none px-2 py-1 focus:border-rose-500"
+              className={styles.input}
               value={column.title}
               onChange={(e) => updateColumn(column.id, e.target.value)}
             />
@@ -92,15 +93,15 @@ export default function ColumnContainer({
         </div>
         <button
           onClick={() => deleteColumn(column.id)}
-          className="rounded-full p-2 text-gray-400 hover:text-white hover:bg-columnBackground"
+          className={styles.deleteButton}
         >
           <Trash2Icon className="size-4" />
         </button>
       </div>
-      <div className="flex p-2 flex-col gap-2 overflow-x-hidden overflow-y-auto flex-grow">
+      <div className={styles.tasksContainer}>
         {tasks.length === 0 && (
-          <div className="flex flex-col gap-2 items-center justify-center flex-grow">
-            <p className="text-sm text-gray-400">No tasks added yet.</p>
+          <div className={styles.emptyState}>
+            <p className={styles.emptyText}>No tasks added yet.</p>
           </div>
         )}
         <SortableContext items={tasksId}>
@@ -116,7 +117,7 @@ export default function ColumnContainer({
       </div>
       <button
         type="button"
-        className="p-4 flex items-center gap-2 border-columnBackground border-2 rounded-md active:bg-black hover:bg-mainBackground"
+        className={styles.addTaskButton}
         onClick={() => createTask(column.id)}
       >
         <PlusIcon />

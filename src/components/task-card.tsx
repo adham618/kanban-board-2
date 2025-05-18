@@ -5,6 +5,7 @@ import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { Trash2Icon } from "lucide-react";
 import * as React from "react";
+import styles from './task-card.module.css';
 
 export default function TaskCard({
   task,
@@ -46,10 +47,10 @@ export default function TaskCard({
         style={style}
         {...attributes}
         {...listeners}
-        className="bg-mainBackground p-2.5 h-[60px] min-h-[60px] items-center flex text-left rounded-xl hover:ring-2 hover:ring-inset hover:ring-rose-500 cursor-grab relative"
+        className={styles.cardEditMode}
       >
         <textarea
-          className="h-[90%] w-full resize-none border-none rounded bg-transparent text-white focus:outline-none"
+          className={styles.textarea}
           value={task.content}
           autoFocus
           placeholder="Enter task content"
@@ -66,7 +67,7 @@ export default function TaskCard({
       <div
         ref={setNodeRef}
         style={style}
-        className="bg-mainBackground opacity-30 p-2.5 h-[60px] min-h-[60px] items-center flex text-left rounded-xl  cursor-grab border-2 border-rose-500 relative"
+        className={styles.cardDragging}
       ></div>
     );
   }
@@ -77,20 +78,20 @@ export default function TaskCard({
       style={style}
       {...attributes}
       {...listeners}
-      className="bg-mainBackground p-2.5 h-[60px] min-h-[60px] items-center flex text-left rounded-xl hover:ring-2 hover:ring-inset hover:ring-rose-500 cursor-grab relative"
+      className={styles.card}
       onMouseEnter={() => setMouseIsOver(true)}
       onMouseLeave={() => setMouseIsOver(false)}
       onClick={toggleEditMode}
     >
-      <p className="my-auto flex items-center h-[90%] w-full overflow-x-hidden overflow-y-auto whitespace-pre-wrap">
+      <p className={styles.content}>
         {task.content}
       </p>
       {mouseIsOver && (
         <button
-          className="absolute top-1/2 -translate-y-1/2 bg-columnBackground p-2 rounded opacity-60 hover:opacity-100 right-4 text-white outline-none"
+          className={styles.deleteButton}
           onClick={() => deleteTask(task.id)}
         >
-          <Trash2Icon className="size-4" />
+          <Trash2Icon className={styles.icon} />
         </button>
       )}
     </div>
