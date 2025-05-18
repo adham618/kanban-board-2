@@ -71,7 +71,6 @@
   flex-direction: column;
   gap: 0.5rem;
   overflow-x: hidden;
-  overflow-y: auto;
   flex-grow: 1;
 }
 
